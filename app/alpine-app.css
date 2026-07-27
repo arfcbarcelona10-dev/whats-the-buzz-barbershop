@@ -1,0 +1,1231 @@
+/* Premium alpine treatment for the client booking and owner operations surfaces. */
+.booking-shell,
+.owner-shell,
+.owner-login-shell,
+.booking-loading,
+.owner-loading {
+  --booking-ink: #efece5;
+  --booking-muted: #9c9e99;
+  --booking-paper: #0b0d0d;
+  --booking-white: #181b19;
+  --booking-forest: #b8945d;
+  --booking-forest-dark: #8f6e3e;
+  --booking-signal: #d0b07b;
+  --booking-sky: #8997a0;
+  --booking-brass: #d0b07b;
+  --booking-line: rgba(184, 148, 93, 0.28);
+  color: var(--booking-ink);
+  background-color: #0b0d0d;
+  background-image:
+    linear-gradient(rgba(11, 13, 13, 0.95), rgba(11, 13, 13, 0.98)),
+    url("/mountain-interior.jpg");
+  background-position: center, center top;
+  background-size: auto, cover;
+  background-attachment: fixed;
+}
+
+.booking-shell,
+.owner-login-shell,
+.owner-shell {
+  font-family: "Manrope", Arial, sans-serif;
+}
+
+.booking-loading,
+.owner-loading {
+  color: #d0b07b;
+}
+
+.booking-loading p,
+.owner-loading p {
+  color: #9c9e99;
+}
+
+.booking-header {
+  position: sticky;
+  top: 0;
+  min-height: 86px;
+  color: #efece5;
+  background: rgba(10, 12, 11, 0.88);
+  border-color: rgba(184, 148, 93, 0.28);
+  backdrop-filter: blur(20px) saturate(0.8);
+}
+
+.booking-brand,
+.owner-brand {
+  gap: 13px;
+}
+
+.booking-brand-mark,
+.owner-brand-mark {
+  width: 50px;
+  height: 50px;
+  color: #efece5;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+.booking-brand-mark::after,
+.owner-brand-mark::after {
+  content: "";
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  left: 3px;
+  height: 1px;
+  background: #b8945d;
+}
+
+.booking-brand-mark > svg:last-child,
+.owner-brand-mark > svg:last-child {
+  color: #d0b07b;
+}
+
+.booking-brand strong,
+.owner-brand strong {
+  color: #efece5;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 23px;
+  font-weight: 400;
+}
+
+.booking-brand small,
+.owner-brand small {
+  color: #d0b07b;
+  font-size: 8px;
+  letter-spacing: 0;
+}
+
+.booking-header nav {
+  color: rgba(239, 236, 229, 0.72);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.booking-open {
+  color: #d0b07b;
+}
+
+.booking-open i,
+.owner-shop-status i {
+  background: #9bc895;
+  box-shadow: 0 0 0 4px rgba(155, 200, 149, 0.1);
+}
+
+.booking-owner-link {
+  border-color: rgba(184, 148, 93, 0.35);
+  border-radius: 0;
+}
+
+.booking-owner-link:hover {
+  color: #0b0d0d;
+  background: #d0b07b;
+}
+
+.booking-main {
+  width: min(100% - 64px, 1280px);
+  padding-top: 64px;
+}
+
+.booking-eyebrow,
+.booking-step-number,
+.owner-login-kicker,
+.owner-login-eyebrow,
+.owner-panel-heading p,
+.owner-section-head > div > p,
+.owner-welcome > div > p,
+.appointment-drawer header p,
+.walkin-modal header p {
+  color: #d0b07b;
+  letter-spacing: 0;
+}
+
+.booking-intro h1,
+.booking-step h2,
+.manage-page h1,
+.reschedule-page h1,
+.booking-confirmation h1,
+.owner-login-brand h1,
+.owner-login-panel h2,
+.owner-welcome h2,
+.owner-section-head h2,
+.owner-topbar h1,
+.owner-panel-heading h3,
+.service-editor h3,
+.appointment-drawer h2,
+.walkin-modal h2 {
+  color: #efece5;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.booking-intro h1 {
+  max-width: 780px;
+  font-size: clamp(48px, 5vw, 76px);
+  line-height: 0.97;
+}
+
+.booking-intro h1::after {
+  content: "";
+  width: 72px;
+  height: 1px;
+  display: block;
+  margin-top: 22px;
+  background: #b8945d;
+}
+
+.booking-progress span {
+  color: #898c87;
+  background: #151816;
+  border-color: rgba(184, 148, 93, 0.28);
+  border-radius: 0;
+}
+
+.booking-progress span:not(:last-of-type)::after {
+  background: rgba(184, 148, 93, 0.28);
+}
+
+.booking-progress span.is-active {
+  color: #0b0d0d;
+  background: #d0b07b;
+  border-color: #d0b07b;
+}
+
+.booking-progress p,
+.service-choice-main small,
+.service-choice-meta small,
+.booking-form-grid label > span,
+.reschedule-service > span,
+.confirmation-foot,
+.manage-hero > p:last-child,
+.reschedule-page > p,
+.confirmation-lede {
+  color: #9c9e99;
+}
+
+.booking-workspace {
+  gap: 20px;
+}
+
+.booking-flow,
+.booking-summary,
+.manage-actions-panel,
+.confirmation-ticket {
+  background: rgba(22, 25, 23, 0.93);
+  border-color: rgba(184, 148, 93, 0.3);
+  border-radius: 0;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+}
+
+.booking-flow {
+  position: relative;
+  overflow: hidden;
+}
+
+.booking-flow::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 2px;
+  background: #b8945d;
+}
+
+.booking-step h2 {
+  font-size: 42px;
+}
+
+.service-choice {
+  color: #efece5;
+  background: rgba(239, 236, 229, 0.025);
+  border-color: rgba(239, 236, 229, 0.12);
+  border-radius: 0;
+}
+
+.service-choice:hover {
+  background: rgba(239, 236, 229, 0.06);
+  border-color: rgba(208, 176, 123, 0.62);
+}
+
+.service-choice.is-selected {
+  background: rgba(184, 148, 93, 0.1);
+  border-color: #b8945d;
+  box-shadow: inset 3px 0 #d0b07b;
+}
+
+.service-choice-check {
+  color: #0b0d0d;
+  border-color: rgba(239, 236, 229, 0.35);
+  border-radius: 0;
+}
+
+.is-selected .service-choice-check {
+  background: #d0b07b;
+  border-color: #d0b07b;
+}
+
+.book-button,
+.date-strip button,
+.time-groups button {
+  border-radius: 0;
+}
+
+.book-button {
+  min-height: 52px;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.book-button-primary {
+  color: #0b0d0d !important;
+  background: #d0b07b;
+  border-color: #d0b07b;
+  box-shadow: none;
+}
+
+.book-button-primary:hover:not(:disabled) {
+  color: #efece5 !important;
+  background: #8f6e3e;
+}
+
+.book-button-outline {
+  color: #efece5;
+  border-color: rgba(184, 148, 93, 0.55);
+}
+
+.book-button-outline:hover:not(:disabled) {
+  background: rgba(184, 148, 93, 0.1);
+}
+
+.book-back {
+  color: #b4b6b1 !important;
+}
+
+.date-strip button,
+.time-groups button {
+  color: #d7d5ce;
+  background: rgba(239, 236, 229, 0.025);
+  border-color: rgba(239, 236, 229, 0.13);
+}
+
+.date-strip button:hover:not(:disabled),
+.time-groups button:hover {
+  border-color: rgba(208, 176, 123, 0.64);
+}
+
+.date-strip button.is-selected,
+.time-groups button.is-selected {
+  color: #0b0d0d;
+  background: #d0b07b;
+  border-color: #d0b07b;
+}
+
+.date-strip button.is-selected small,
+.date-strip button.is-selected span {
+  color: rgba(11, 13, 13, 0.68);
+}
+
+.time-empty {
+  color: #9c9e99;
+  background: rgba(239, 236, 229, 0.025);
+  border-color: rgba(239, 236, 229, 0.12);
+  border-radius: 0;
+}
+
+.booking-form-grid input,
+.booking-form-grid textarea,
+.reschedule-service select,
+.availability-form input,
+.walkin-grid input,
+.walkin-grid select,
+.walkin-grid textarea,
+.settings-name input,
+.settings-select select,
+.service-editor-fields label > div,
+.owner-login-panel label > div,
+.owner-search,
+.customer-search {
+  color: #efece5;
+  background: #101311;
+  border-color: rgba(239, 236, 229, 0.14);
+  border-radius: 0;
+}
+
+.booking-form-grid input::placeholder,
+.booking-form-grid textarea::placeholder,
+.walkin-grid input::placeholder,
+.walkin-grid textarea::placeholder,
+.owner-search input::placeholder,
+.customer-search input::placeholder {
+  color: #747872;
+}
+
+.booking-form-grid input:focus,
+.booking-form-grid textarea:focus,
+.reschedule-service select:focus,
+.availability-form input:focus,
+.walkin-grid input:focus,
+.walkin-grid select:focus,
+.walkin-grid textarea:focus,
+.settings-name input:focus {
+  border-color: #b8945d;
+  box-shadow: 0 0 0 3px rgba(184, 148, 93, 0.1);
+}
+
+.booking-consent {
+  color: #aeb0ab;
+}
+
+.booking-summary {
+  overflow: hidden;
+}
+
+.summary-image {
+  background: #101210;
+}
+
+.summary-image img {
+  filter: saturate(0.72) contrast(1.06);
+}
+
+.summary-content h2,
+.summary-total strong,
+.summary-content dd {
+  color: #efece5;
+}
+
+.summary-content dl > div,
+.summary-total,
+.summary-location {
+  border-color: rgba(184, 148, 93, 0.23);
+}
+
+.summary-content dt,
+.summary-total span,
+.summary-location {
+  color: #9c9e99;
+}
+
+.manage-detail-band {
+  color: #efece5;
+  background: #151816;
+  border-color: rgba(184, 148, 93, 0.3);
+}
+
+.manage-detail-inner > div,
+.confirmation-ticket > div {
+  border-color: rgba(184, 148, 93, 0.25);
+}
+
+.manage-detail-inner svg,
+.manage-status-mark,
+.confirmation-orbit {
+  color: #d0b07b;
+}
+
+.manage-status-mark,
+.confirmation-orbit {
+  background: rgba(184, 148, 93, 0.1);
+  border: 1px solid rgba(208, 176, 123, 0.4);
+  border-radius: 0;
+}
+
+.manage-status-mark.is-cancelled {
+  color: #d68d82;
+  background: rgba(133, 54, 45, 0.18);
+}
+
+.book-text-danger {
+  color: #d68d82 !important;
+}
+
+/* Owner login */
+.owner-login-shell {
+  background: #0b0d0d;
+}
+
+.owner-login-brand::before {
+  background:
+    linear-gradient(90deg, rgba(7, 9, 8, 0.88), rgba(7, 9, 8, 0.34)),
+    url("/mountain-craft.jpg") center / cover;
+  filter: saturate(0.72) contrast(1.04);
+}
+
+.owner-login-brand::after {
+  height: 1px;
+  right: 8%;
+  bottom: 72px;
+  left: 8%;
+  background: rgba(184, 148, 93, 0.48);
+  clip-path: none;
+}
+
+.owner-login-brand .owner-brand-mark {
+  color: #efece5;
+  background: transparent;
+}
+
+.owner-login-brand h1 {
+  font-size: clamp(58px, 6vw, 98px);
+  line-height: 0.98;
+}
+
+.owner-login-brand h1 span,
+.owner-login-kicker {
+  color: #d0b07b;
+}
+
+.owner-login-brand > div > p:last-child,
+.owner-login-brand blockquote {
+  color: rgba(239, 236, 229, 0.66);
+}
+
+.owner-login-brand blockquote {
+  margin-top: 36px;
+  transform: translateY(18px);
+}
+
+.owner-login-panel {
+  background: #101311;
+  border-left: 1px solid rgba(184, 148, 93, 0.32);
+}
+
+.owner-login-panel form {
+  background: #171a18;
+  border-color: rgba(184, 148, 93, 0.3);
+  border-radius: 0;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.38);
+}
+
+.owner-login-icon {
+  color: #d0b07b;
+  background: transparent;
+  border: 1px solid rgba(208, 176, 123, 0.45);
+  border-radius: 0;
+}
+
+.owner-login-panel form > p:nth-of-type(2),
+.owner-login-panel > a {
+  color: #9c9e99;
+}
+
+.owner-login-panel label > div {
+  min-height: 54px;
+}
+
+.owner-login-panel input,
+.owner-search input,
+.customer-search input {
+  color: #efece5;
+}
+
+.owner-login-panel form > button {
+  min-height: 54px;
+  color: #0b0d0d;
+  background: #d0b07b;
+  border: 1px solid #d0b07b;
+  border-radius: 0;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.owner-login-panel form > button:hover {
+  color: #efece5;
+  background: #8f6e3e;
+  border-color: #8f6e3e;
+}
+
+.demo-access {
+  color: #aaa9a3;
+  background: rgba(184, 148, 93, 0.07);
+  border-left-color: #b8945d;
+}
+
+.demo-access strong {
+  color: #d0b07b;
+}
+
+/* Owner operations */
+.owner-shell {
+  background-color: #0e1110;
+  background-image: none;
+}
+
+.owner-sidebar {
+  color: #efece5;
+  background: #090b0a;
+  border-right: 1px solid rgba(184, 148, 93, 0.28);
+}
+
+.owner-sidebar-brand > a {
+  display: inline-flex;
+  align-items: center;
+}
+
+.owner-sidebar .owner-brand-mark {
+  color: #efece5;
+  background: transparent;
+}
+
+.owner-shop-status {
+  background: rgba(239, 236, 229, 0.035);
+  border-color: rgba(184, 148, 93, 0.25);
+  border-radius: 0;
+}
+
+.owner-shop-status small {
+  color: rgba(239, 236, 229, 0.46);
+}
+
+.owner-sidebar nav button,
+.owner-sidebar-bottom a,
+.owner-sidebar-bottom button {
+  color: rgba(239, 236, 229, 0.57);
+  border-radius: 0;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+.owner-sidebar nav button:hover,
+.owner-sidebar nav button.is-active {
+  color: #efece5;
+  background: rgba(184, 148, 93, 0.09);
+}
+
+.owner-sidebar nav button.is-active {
+  box-shadow: inset 2px 0 #d0b07b;
+}
+
+.owner-sidebar-bottom {
+  border-color: rgba(184, 148, 93, 0.2);
+}
+
+.owner-app {
+  color: #efece5;
+  background:
+    linear-gradient(rgba(14, 17, 16, 0.985), rgba(14, 17, 16, 0.985)),
+    url("/mountain-interior.jpg") center top / cover fixed;
+}
+
+.owner-topbar {
+  color: #efece5;
+  background: rgba(12, 14, 13, 0.9);
+  border-color: rgba(184, 148, 93, 0.25);
+  backdrop-filter: blur(18px);
+}
+
+.owner-topbar > div:first-of-type p,
+.owner-metric p,
+.owner-metric small,
+.owner-section-head .section-head-note,
+.service-editor > p,
+.settings-section > div:first-child p,
+.setting-toggle small,
+.settings-select small,
+.settings-note p,
+.appointment-person small,
+.calendar-appointment span,
+.drawer-guest p {
+  color: #8f938d;
+}
+
+.owner-search {
+  min-height: 44px;
+}
+
+.owner-add-button,
+.owner-primary-action,
+.owner-welcome > button,
+.availability-form > button,
+.service-editor > button,
+.owner-next-card button,
+.owner-empty button,
+.walkin-modal footer button:last-child {
+  color: #0b0d0d !important;
+  background: #d0b07b;
+  border-color: #d0b07b;
+  border-radius: 0;
+  text-transform: uppercase;
+}
+
+.owner-avatar,
+.appointment-avatar,
+.customer-name i,
+.large-avatar,
+.drawer-guest > span {
+  color: #0b0d0d;
+  background: #c8aa77;
+  border-radius: 0;
+}
+
+.owner-welcome {
+  position: relative;
+  min-height: 162px;
+  background:
+    linear-gradient(90deg, rgba(9, 11, 10, 0.98) 0%, rgba(9, 11, 10, 0.82) 62%, rgba(9, 11, 10, 0.2) 100%),
+    url("/hero-barber.jpg") 74% 54% / cover;
+  border: 1px solid rgba(184, 148, 93, 0.28);
+  border-radius: 0;
+}
+
+.owner-welcome::after {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(239, 236, 229, 0.06);
+  pointer-events: none;
+}
+
+.owner-welcome > * {
+  position: relative;
+  z-index: 1;
+}
+
+.owner-welcome span {
+  color: rgba(239, 236, 229, 0.61);
+}
+
+.owner-metric,
+.owner-panel,
+.availability-form,
+.owner-table-panel,
+.settings-section,
+.service-editor,
+.owner-calendar,
+.owner-next-card,
+.owner-quick-note,
+.appointment-drawer,
+.walkin-modal {
+  color: #efece5;
+  background: #171a18;
+  border-color: rgba(184, 148, 93, 0.24);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.owner-metric {
+  border-top-color: rgba(208, 176, 123, 0.48);
+}
+
+.owner-metric > span,
+.owner-metric.tone-forest > span,
+.owner-metric.tone-signal > span,
+.owner-metric.tone-sky > span,
+.owner-metric.tone-brass > span {
+  color: #d0b07b;
+  background: rgba(184, 148, 93, 0.09);
+  border: 1px solid rgba(184, 148, 93, 0.22);
+  border-radius: 0;
+}
+
+.owner-metric strong,
+.owner-next-card h3,
+.customer-table strong,
+.service-editor h3,
+.setting-toggle strong,
+.settings-select strong,
+.settings-section h3,
+.drawer-guest h3,
+.drawer-details dd,
+.block-list strong {
+  color: #efece5;
+}
+
+.owner-metric strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+}
+
+.owner-panel-heading,
+.appointment-row,
+.customer-table,
+.calendar-day,
+.drawer-details > div,
+.appointment-drawer header,
+.walkin-modal header,
+.settings-section,
+.service-editor header,
+.block-list > div:not(.owner-empty) {
+  border-color: rgba(239, 236, 229, 0.09);
+}
+
+.owner-panel-heading > button,
+.calendar-toolbar button,
+.owner-segmented,
+.owner-menu,
+.appointment-drawer header button,
+.walkin-modal header button,
+.block-list button {
+  color: #b8bab5;
+  background: #111411;
+  border-color: rgba(184, 148, 93, 0.26);
+  border-radius: 0;
+}
+
+.appointment-row {
+  color: #efece5;
+  background: transparent;
+}
+
+.appointment-row:hover,
+.customer-table:hover {
+  background: rgba(184, 148, 93, 0.065);
+}
+
+.appointment-row time,
+.appointment-price {
+  color: #d0b07b;
+}
+
+.owner-status {
+  border-radius: 0;
+}
+
+.status-confirmed { color: #9bc895; background: rgba(67, 113, 72, 0.18); }
+.status-pending { color: #d8bd72; background: rgba(128, 105, 34, 0.18); }
+.status-completed { color: #94b4bd; background: rgba(57, 98, 108, 0.2); }
+.status-cancelled { color: #d68d82; background: rgba(133, 54, 45, 0.2); }
+.status-no_show { color: #b0b2ad; background: rgba(113, 117, 111, 0.16); }
+
+.owner-next-card {
+  background:
+    linear-gradient(rgba(15, 17, 16, 0.89), rgba(15, 17, 16, 0.96)),
+    url("/mountain-craft.jpg") 68% center / cover;
+}
+
+.owner-quick-note {
+  color: #c8c9c4;
+  background: rgba(184, 148, 93, 0.08);
+}
+
+.calendar-toolbar h2,
+.owner-section-head h2 {
+  color: #efece5;
+}
+
+.owner-segmented {
+  background: #111411;
+}
+
+.owner-segmented button {
+  color: #8f938d;
+}
+
+.owner-segmented button.is-active {
+  color: #0b0d0d;
+  background: #d0b07b;
+  border-radius: 0;
+}
+
+.calendar-day {
+  background: #151816;
+}
+
+.calendar-day header {
+  border-color: rgba(239, 236, 229, 0.08);
+}
+
+.calendar-day header span {
+  color: #858983;
+}
+
+.calendar-day header strong {
+  color: #d8d6cf;
+}
+
+.calendar-day.is-today header strong {
+  color: #0b0d0d;
+  background: #d0b07b;
+  border-radius: 0;
+}
+
+.calendar-day.is-outside {
+  opacity: 0.35;
+}
+
+.calendar-appointment {
+  color: #d7d5ce;
+  background: rgba(184, 148, 93, 0.08);
+  border-color: rgba(184, 148, 93, 0.25);
+  border-radius: 0;
+}
+
+.calendar-block {
+  color: #d68d82;
+  background: rgba(133, 54, 45, 0.14);
+  border-radius: 0;
+}
+
+.section-head-note {
+  background: rgba(184, 148, 93, 0.07);
+  border-color: rgba(184, 148, 93, 0.2);
+  border-radius: 0;
+}
+
+.customer-table-head {
+  color: #8f938d;
+  background: #111411;
+}
+
+.service-editor.is-inactive {
+  opacity: 0.46;
+}
+
+.service-editor header > span {
+  color: #d0b07b;
+  background: rgba(184, 148, 93, 0.08);
+  border-radius: 0;
+}
+
+.service-editor header small {
+  color: #b8945d;
+}
+
+.owner-switch > i {
+  background: #292d29;
+  border-radius: 0;
+}
+
+.owner-switch > i::after {
+  background: #aaa9a3;
+  border-radius: 0;
+}
+
+.owner-switch input:checked + i {
+  background: #b8945d;
+}
+
+.owner-switch input:checked + i::after {
+  background: #0b0d0d;
+}
+
+.service-editor-fields label > div,
+.settings-select select {
+  border: 1px solid rgba(239, 236, 229, 0.13);
+}
+
+.service-editor-fields input,
+.settings-select select {
+  color: #efece5;
+  background: transparent;
+}
+
+.availability-check {
+  color: #b7b8b3;
+}
+
+.block-date {
+  color: #0b0d0d;
+  background: #c8aa77;
+  border-radius: 0;
+}
+
+.setting-toggle,
+.settings-select {
+  border-color: rgba(239, 236, 229, 0.1);
+}
+
+.setting-toggle > span:first-child > svg,
+.settings-select > span > svg,
+.settings-note > svg,
+.drawer-details dt svg {
+  color: #d0b07b;
+}
+
+.settings-note {
+  color: #b9bab5;
+  background: rgba(184, 148, 93, 0.07);
+  border-color: rgba(184, 148, 93, 0.2);
+  border-radius: 0;
+}
+
+.owner-empty {
+  color: #858983;
+}
+
+.owner-empty strong {
+  color: #d8d6cf;
+}
+
+.owner-overlay {
+  background: rgba(2, 3, 3, 0.78);
+  backdrop-filter: blur(7px);
+}
+
+.appointment-drawer,
+.walkin-modal {
+  box-shadow: -28px 0 70px rgba(0, 0, 0, 0.42);
+}
+
+.drawer-notes {
+  color: #aaa9a3;
+  background: #111411;
+  border-color: rgba(239, 236, 229, 0.1);
+  border-radius: 0;
+}
+
+.drawer-status-actions button,
+.walkin-modal footer button {
+  color: #c2c3be;
+  background: #111411;
+  border-color: rgba(239, 236, 229, 0.13);
+  border-radius: 0;
+}
+
+.drawer-status-actions button.is-current {
+  color: #0b0d0d;
+  background: #d0b07b;
+  border-color: #d0b07b;
+}
+
+.owner-toast {
+  color: #0b0d0d;
+  background: #d0b07b;
+  border-radius: 0;
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.38);
+}
+
+@media (max-width: 900px) {
+  .owner-login-panel {
+    border-top: 1px solid rgba(184, 148, 93, 0.32);
+    border-left: 0;
+  }
+
+  .owner-sidebar {
+    box-shadow: 24px 0 60px rgba(0, 0, 0, 0.5);
+  }
+
+  .owner-menu {
+    background: #151816;
+  }
+}
+
+@media (max-width: 680px) {
+  .booking-main {
+    width: min(100% - 30px, 1280px);
+    padding-top: 38px;
+  }
+
+  .booking-intro h1 {
+    font-size: 43px;
+  }
+
+  .booking-flow {
+    padding: 27px 19px;
+  }
+
+  .owner-login-brand h1 {
+    font-size: 50px;
+  }
+
+  .owner-main {
+    padding: 14px;
+  }
+
+  .owner-welcome {
+    background:
+      linear-gradient(90deg, rgba(9, 11, 10, 0.96), rgba(9, 11, 10, 0.58)),
+      url("/mountain-craft.jpg") 72% center / cover;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .booking-shell,
+  .owner-app {
+    background-attachment: scroll;
+  }
+}
+
+/* Site-wide type scale: no operational or supporting copy drops into micro-type. */
+.booking-brand small,
+.owner-brand small { font-size: 10px; }
+.booking-header nav { font-size: 13px; }
+.booking-owner-link { font-size: 12px; }
+.booking-eyebrow,
+.booking-step-number,
+.owner-login-kicker,
+.owner-login-eyebrow,
+.owner-panel-heading p,
+.owner-section-head > div > p,
+.owner-welcome > div > p,
+.appointment-drawer header p,
+.walkin-modal header p { font-size: 13px; }
+.booking-progress span,
+.booking-progress p { font-size: 13px; }
+.service-choice-main strong { font-size: 17px; }
+.service-choice-main small { font-size: 14px; }
+.service-choice-meta strong { font-size: 17px; }
+.service-choice-meta small { font-size: 12px; }
+.book-button { font-size: 13px; }
+.book-back { font-size: 13px; }
+.date-strip button { font-size: 12px; }
+.date-strip button small,
+.date-strip button span { font-size: 12px; }
+.time-empty,
+.time-groups > div > p,
+.time-groups button { font-size: 13px; }
+.booking-form-grid label > span,
+.reschedule-service > span,
+.availability-form label > span,
+.walkin-grid label > span,
+.settings-name > span,
+.service-editor-fields label > span { font-size: 13px; }
+.booking-form-grid input,
+.booking-form-grid textarea,
+.reschedule-service select,
+.availability-form input,
+.walkin-grid input,
+.walkin-grid select,
+.walkin-grid textarea,
+.settings-name input { font-size: 15px; }
+.booking-consent,
+.booking-error,
+.owner-error,
+.owner-login-error { font-size: 13px; }
+.summary-content dt,
+.summary-location { font-size: 13px; }
+.summary-content dd { font-size: 15px; }
+.manage-detail-inner span,
+.confirmation-ticket span { font-size: 12px; }
+.manage-detail-inner strong,
+.confirmation-ticket strong { font-size: 15px; }
+.manage-hero > p:last-child,
+.reschedule-page > p,
+.confirmation-lede { font-size: 15px; }
+.confirmation-foot,
+.book-text-danger { font-size: 13px; }
+
+.owner-login-brand > div > p:last-child { font-size: 17px; line-height: 1.75; }
+.owner-login-brand blockquote { font-size: 15px; }
+.owner-login-panel form > p:nth-of-type(2) { font-size: 15px; }
+.owner-login-panel label > span { font-size: 13px; }
+.owner-login-panel input { font-size: 15px; }
+.owner-login-panel form > button { font-size: 13px; }
+.demo-access { font-size: 12px; line-height: 1.6; }
+.owner-login-panel > a { font-size: 13px; }
+
+.owner-shop-status span { font-size: 12px; }
+.owner-shop-status small { font-size: 11px; }
+.owner-sidebar nav button,
+.owner-sidebar-bottom a,
+.owner-sidebar-bottom button { font-size: 13px; }
+.owner-topbar > div:first-of-type p { font-size: 12px; }
+.owner-topbar h1 { font-size: 30px; }
+.owner-search input,
+.customer-search input { color: #efece5; background: transparent; font-size: 14px; }
+.owner-add-button,
+.owner-primary-action { font-size: 13px; }
+.owner-welcome span { font-size: 14px; }
+.owner-welcome > button { font-size: 13px; }
+.owner-metric p { font-size: 12px; }
+.owner-metric small { font-size: 11px; }
+.owner-panel-heading h3 { font-size: 19px; }
+.appointment-row { font-size: 13px; }
+.appointment-row time { font-size: 13px; }
+.appointment-row time small,
+.appointment-person small { font-size: 11px; }
+.appointment-person strong { font-size: 14px; }
+.owner-status { font-size: 11px; }
+.appointment-price { font-size: 13px; }
+.owner-next-card > p { font-size: 12px; }
+.owner-next-card h3 { font-size: 20px; }
+.owner-next-card small,
+.owner-next-card > div,
+.owner-next-card button,
+.owner-quick-note strong,
+.owner-quick-note p { font-size: 12px; }
+.calendar-toolbar button,
+.owner-segmented button { font-size: 12px; }
+.calendar-toolbar h2 { font-size: 30px; }
+.calendar-day header span { font-size: 11px; }
+.calendar-day header strong { font-size: 13px; }
+.calendar-appointment time,
+.calendar-appointment span,
+.calendar-block { font-size: 11px; }
+.calendar-appointment strong { font-size: 12px; }
+.section-head-note { font-size: 12px; }
+
+/* Customer records need dark-table contrast independent of the old light theme. */
+.owner-table-panel { background: #171a18; }
+button.customer-table {
+  color: #d9d8d2;
+  background: #171a18;
+  border-color: rgba(239, 236, 229, 0.09);
+  font-size: 13px;
+}
+button.customer-table:nth-child(odd) { background: #151816; }
+button.customer-table:hover { color: #efece5; background: rgba(184, 148, 93, 0.1); }
+.customer-table-head {
+  color: #c7a96f;
+  background: #0f1210;
+  border-color: rgba(184, 148, 93, 0.24);
+  font-size: 11px;
+}
+.customer-name i { color: #0b0d0d; background: #c8aa77; font-size: 11px; }
+.customer-name strong,
+.customer-table > span:nth-child(2) strong { color: #efece5; }
+.customer-table > span:nth-child(2) small,
+.customer-table small { color: #9ea19b; font-size: 11px; }
+.customer-table > span:nth-child(3),
+.customer-table > span:nth-child(4) { color: #c8c9c4; }
+.customer-table > span:nth-child(5) { color: #d0b07b; font-weight: 700; }
+.owner-sidebar .owner-brand small { font-size: 9px; white-space: nowrap; }
+
+.service-editor header small { font-size: 11px; }
+.service-editor h3 { font-size: 17px; }
+.service-editor > p { font-size: 13px; }
+.service-editor-fields label > div,
+.service-editor-fields input,
+.service-editor > button { font-size: 13px; }
+.availability-check,
+.availability-form > button,
+.owner-panel-heading > span,
+.block-list > div > span:nth-child(2) strong,
+.block-list > div > span:nth-child(2) small,
+.block-list button { font-size: 12px; }
+.settings-section > div:first-child h3 { font-size: 19px; }
+.settings-section > div:first-child p { font-size: 13px; }
+.setting-toggle strong,
+.settings-select strong { font-size: 14px; }
+.setting-toggle small,
+.settings-select small,
+.settings-select select,
+.settings-note strong,
+.settings-note p { font-size: 12px; }
+.owner-empty strong { font-size: 14px; }
+.owner-empty p,
+.owner-empty button { font-size: 12px; }
+.drawer-guest h3 { font-size: 17px; }
+.drawer-guest p,
+.drawer-details dt,
+.drawer-details dd,
+.drawer-notes p,
+.drawer-notes span,
+.drawer-status-actions > p,
+.drawer-status-actions button,
+.walkin-modal footer button { font-size: 13px; }
+
+@media (max-width: 680px) {
+  .owner-add-button,
+  .owner-welcome > button {
+    overflow: hidden;
+    font-size: 0 !important;
+    white-space: nowrap;
+  }
+  .owner-sidebar nav button,
+  .owner-sidebar-bottom a,
+  .owner-sidebar-bottom button { font-size: 12px; }
+  .customer-table { font-size: 12px; }
+}
+
+.booking-brand small,
+.owner-brand small { font-size: 11px; }
+.summary-total span { font-size: 12px; }
+.owner-shell { --owner-sidebar: 250px; }
+.owner-sidebar .owner-brand small { font-size: 11px; }
+.owner-shop-status small,
+.owner-avatar,
+.customer-table-head,
+.customer-name i,
+.customer-table small { font-size: 12px; }
+.customer-table > span:nth-child(2) small { font-size: 12px; }

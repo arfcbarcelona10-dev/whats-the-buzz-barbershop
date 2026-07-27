@@ -6,7 +6,9 @@ import "@fontsource/manrope/500.css";
 import "@fontsource/manrope/600.css";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
+import "./booking.css";
 import "./globals.css";
+import "./alpine-app.css";
 
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
@@ -19,32 +21,32 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase: new URL(origin),
-    title: "Barber on the Mountain | Welches, Oregon Barbershop",
+    title: "What's The Buzz? | Schofield, Wisconsin Barber Shop",
     description:
-      "Precision haircuts, fades, kids' cuts, beard trims, and hot towel shaves in Welches, Oregon. Walk-ins and appointments welcome.",
+      "Friendly, consistent haircuts, fades, kids' cuts, beard trims, and hot towel service in Schofield, Wisconsin. Walk-ins and appointments welcome.",
     icons: {
       icon: "/favicon.svg",
       shortcut: "/favicon.svg",
     },
     openGraph: {
-      title: "Barber on the Mountain",
-      description: "Mountain town cuts. City-level finish. Walk-ins welcome in Welches, Oregon.",
+      title: "What's The Buzz?",
+      description: "Great cuts, friendly service, and fair prices in Schofield, Wisconsin.",
       type: "website",
       locale: "en_US",
       images: [
         {
-          url: new URL("/og.png", origin).toString(),
+          url: new URL("/hero-barber.jpg", origin).toString(),
           width: 1200,
           height: 630,
-          alt: "Barber on the Mountain in Welches, Oregon",
+          alt: "What's The Buzz? barber shop in Schofield, Wisconsin",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Barber on the Mountain",
-      description: "Classic craft. Modern finish. Right here on the mountain.",
-      images: [new URL("/og.png", origin).toString()],
+      title: "What's The Buzz?",
+      description: "Friendly service. Consistent craft. A cut above.",
+      images: [new URL("/hero-barber.jpg", origin).toString()],
     },
   };
 }

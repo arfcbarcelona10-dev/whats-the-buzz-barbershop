@@ -1,697 +1,302 @@
 "use client";
 
 import {
+  ArrowDown,
   ArrowRight,
+  Baby,
+  Brush,
+  CalendarDays,
   Camera,
   Check,
-  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   Clock3,
   MapPin,
-  Mountain,
   Phone,
   Scissors,
+  ScissorsLineDashed,
+  Sparkles,
+  SprayCan,
   Star,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 
-const PHONE_DISPLAY = "(503) 744-2884";
-const PHONE_HREF = "tel:+15037442884";
-const INSTAGRAM_URL = "https://www.instagram.com/barberonthemountain";
-const REVIEWS_URL =
-  "https://www.google.com/search?q=barber+on+the+mountain+welches+oregon";
-const DIRECTIONS_URL =
-  "https://www.google.com/maps/dir/?api=1&destination=68216%20US-26%2C%20Welches%2C%20OR%2097067";
+const PHONE_DISPLAY = "(715) 298-3307";
+const PHONE_HREF = "tel:+17152983307";
+const PROFILE_URL = "https://www.google.com/search?q=What%27s+The+Buzz+barber+shop+Schofield+WI";
+const REVIEWS_URL = `${PROFILE_URL}+reviews`;
+const DIRECTIONS_URL = "https://www.google.com/maps/dir/?api=1&destination=2215%20Schofield%20Ave%20%231%2C%20Schofield%2C%20WI%2054476";
 
 type HoursWindow = [number, number];
 
 const SHOP_HOURS: Record<string, HoursWindow[]> = {
   Sun: [],
-  Mon: [[540, 1440]],
-  Tue: [
-    [0, 390],
-    [540, 1110],
-  ],
-  Wed: [[540, 1020]],
-  Thu: [[540, 1110]],
-  Fri: [[540, 1110]],
-  Sat: [[540, 1020]],
+  Mon: [[540, 1080]],
+  Tue: [[540, 1080]],
+  Wed: [[540, 1080]],
+  Thu: [[540, 1080]],
+  Fri: [[540, 1020]],
+  Sat: [[540, 840]],
 };
 
 const DAY_ORDER = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const DAY_NAMES: Record<string, string> = {
-  Sun: "Sunday",
-  Mon: "Monday",
-  Tue: "Tuesday",
-  Wed: "Wednesday",
-  Thu: "Thursday",
-  Fri: "Friday",
-  Sat: "Saturday",
+  Sun: "Sunday", Mon: "Monday", Tue: "Tuesday", Wed: "Wednesday",
+  Thu: "Thursday", Fri: "Friday", Sat: "Saturday",
 };
 
 const hoursRows = [
-  ["Monday", "9 AM - midnight"],
-  ["Tuesday", "12 - 6:30 AM / 9 AM - 6:30 PM"],
-  ["Wednesday", "9 AM - 5 PM"],
-  ["Thursday", "9 AM - 6:30 PM"],
-  ["Friday", "9 AM - 6:30 PM"],
-  ["Saturday", "9 AM - 5 PM"],
+  ["Monday", "9 AM - 6 PM"],
+  ["Tuesday", "9 AM - 6 PM"],
+  ["Wednesday", "9 AM - 6 PM"],
+  ["Thursday", "9 AM - 6 PM"],
+  ["Friday", "9 AM - 5 PM"],
+  ["Saturday", "9 AM - 2 PM"],
   ["Sunday", "Closed"],
 ];
 
-const serviceGroups = [
-  {
-    number: "01",
-    title: "Cuts",
-    description: "Clean shape, sharp finish, and a cut that grows out right.",
-    services: [
-      "Haircut",
-      "Custom cut",
-      "Fade cut",
-      "Buzz cut",
-      "Scissor cut",
-      "Long haircut",
-      "Curly hair",
-    ],
-  },
-  {
-    number: "02",
-    title: "Shaves",
-    description: "Traditional detail work with modern precision and comfort.",
-    services: [
-      "Beard trim",
-      "Beard maintenance",
-      "Hot towel shave",
-      "Head shave",
-      "Eyebrow trimming",
-    ],
-  },
-  {
-    number: "03",
-    title: "Freshen up",
-    description: "The finishing touches that leave you reset for the road ahead.",
-    services: ["Kids' cuts", "Shampoo & conditioning", "Shave"],
-  },
+const serviceFeatures = [
+  { icon: Scissors, title: "Haircuts", copy: "Classic cuts, fades, tapers, and custom shaping.", items: ["Haircut", "Custom cut", "Fade cut", "Buzz cut", "Curly hair", "Long haircut", "Scissor cut"] },
+  { icon: Brush, title: "Beard trim", copy: "Precision grooming, shaping, and clean line work.", items: ["Beard trim", "Beard maintenance", "Eyebrow trimming"] },
+  { icon: ScissorsLineDashed, title: "Hot towel shave", copy: "Traditional straight razor comfort and detail.", items: ["Hot towel shave", "Head shave", "Shave"] },
+  { icon: SprayCan, title: "Styling", copy: "A polished reset for any look or occasion.", items: ["Shampoo & conditioning"] },
+  { icon: Baby, title: "Kids' cuts", copy: "Patient, clean cuts for young guests and growing styles.", items: ["Kids' cuts"] },
 ];
 
 const reviews = [
-  {
-    quote: "Great vibe, great service and great haircut!",
-    name: "Belinda Hughes",
-    detail: "Local Guide",
-  },
-  {
-    quote: "One of the best cuts I have gotten in years!",
-    name: "Colin Schacht",
-    detail: "Google review",
-  },
-  {
-    quote: "Best haircut experience I have ever had.",
-    name: "Brent Mitchell",
-    detail: "Google review",
-  },
+  { quote: "Great haircut, great price! I will be back, thanks Michelle!", name: "Carson Weber" },
+  { quote: "Michelle was excellent! She did a great job and was able to do it quickly at a very reasonable price.", name: "Troy" },
+  { quote: "Best haircut experience ever! Hot towel on face while shampooing my hair, and an excellent haircut.", name: "Scott Hafenan" },
+];
+
+const gallery = [
+  { image: "/mountain-interior.jpg", alt: "Warm timber barbershop interior", label: "The chair" },
+  { image: "/mountain-craft.jpg", alt: "Barber carefully finishing a haircut", label: "The craft" },
+  { image: "/mountain-shop-hero.jpg", alt: "Premium barbershop exterior and interior detail", label: "The shop" },
+  { image: "/barber-before-after.png", alt: "Before and after transformation from an overgrown style to a polished haircut and beard", label: "The finish" },
+  { image: "/gallery-detail.png", alt: "Fresh short haircut and precisely shaped beard shown in profile", label: "The detail" },
+  { image: "/gallery-style.png", alt: "Finished braided hairstyle shown in profile", label: "The style" },
+  { image: "/gallery-rules.png", alt: "Vintage barbershop rules sign inside the shop", label: "The rules" },
+  { image: "/gallery-storefront.png", alt: "What's The Buzz? storefront in Schofield, Wisconsin", label: "The storefront" },
 ];
 
 function formatTime(minutes: number) {
   if (minutes === 1440 || minutes === 0) return "midnight";
   const hour = Math.floor(minutes / 60);
   const minute = minutes % 60;
-  const suffix = hour >= 12 ? "PM" : "AM";
-  const displayHour = hour % 12 || 12;
-  return `${displayHour}${minute ? `:${String(minute).padStart(2, "0")}` : ""} ${suffix}`;
+  return `${hour % 12 || 12}${minute ? `:${String(minute).padStart(2, "0")}` : ""} ${hour >= 12 ? "PM" : "AM"}`;
 }
 
 function getShopStatus(date: Date) {
   const parts = new Intl.DateTimeFormat("en-US", {
-    timeZone: "America/Los_Angeles",
-    weekday: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-    hourCycle: "h23",
+    timeZone: "America/Chicago", weekday: "short", hour: "2-digit",
+    minute: "2-digit", hourCycle: "h23",
   }).formatToParts(date);
-
   const weekday = parts.find((part) => part.type === "weekday")?.value ?? "Sun";
-  const hour = Number(parts.find((part) => part.type === "hour")?.value ?? 0);
-  const minute = Number(parts.find((part) => part.type === "minute")?.value ?? 0);
-  const currentMinute = hour * 60 + minute;
+  const currentMinute = Number(parts.find((part) => part.type === "hour")?.value ?? 0) * 60
+    + Number(parts.find((part) => part.type === "minute")?.value ?? 0);
   const today = SHOP_HOURS[weekday];
-  const activeWindow = today.find(
-    ([start, end]) => currentMinute >= start && currentMinute < end,
-  );
-
-  if (activeWindow) {
-    return {
-      isOpen: true,
-      label: `Open now - until ${formatTime(activeWindow[1])}`,
-    };
-  }
-
-  const laterToday = today.find(([start]) => start > currentMinute);
-  if (laterToday) {
-    return {
-      isOpen: false,
-      label: `Closed now - opens ${formatTime(laterToday[0])}`,
-    };
-  }
-
+  const active = today.find(([start, end]) => currentMinute >= start && currentMinute < end);
+  if (active) return { isOpen: true, label: `Open now · until ${formatTime(active[1])}` };
+  const later = today.find(([start]) => start > currentMinute);
+  if (later) return { isOpen: false, label: `Closed now · opens ${formatTime(later[0])}` };
   const todayIndex = DAY_ORDER.indexOf(weekday);
   for (let offset = 1; offset <= 7; offset += 1) {
     const nextDay = DAY_ORDER[(todayIndex + offset) % 7];
     const nextWindow = SHOP_HOURS[nextDay][0];
-    if (nextWindow) {
-      return {
-        isOpen: false,
-        label: `Closed now - opens ${DAY_NAMES[nextDay]} at ${formatTime(nextWindow[0])}`,
-      };
-    }
+    if (nextWindow) return { isOpen: false, label: `Closed · opens ${DAY_NAMES[nextDay]} at ${formatTime(nextWindow[0])}` };
   }
-
-  return { isOpen: false, label: "Call for today's availability" };
+  return { isOpen: false, label: "Call for availability" };
 }
 
-function StarRow({ dark = false }: { dark?: boolean }) {
+function BrandLogo({ footer = false }: { footer?: boolean }) {
   return (
-    <span className={`star-row${dark ? " star-row-dark" : ""}`} aria-label="5 out of 5 stars">
-      {Array.from({ length: 5 }).map((_, index) => (
-        <Star key={index} size={16} strokeWidth={2} fill="currentColor" aria-hidden="true" />
-      ))}
+    <span className={`alpine-logo${footer ? " alpine-logo-footer" : ""}`}>
+      <span className="alpine-logo-mark" aria-hidden="true">
+        <Sparkles size={footer ? 34 : 28} strokeWidth={1.25} />
+        <Scissors size={footer ? 16 : 13} strokeWidth={1.5} />
+      </span>
+      <span className="alpine-logo-type">
+        <strong>What&apos;s The Buzz?</strong>
+        <span>Barber Shop · Schofield</span>
+      </span>
     </span>
   );
 }
 
-function BrandMark() {
+function Stars() {
+  return <span className="alpine-stars" aria-label="4.8 out of 5 stars">{Array.from({ length: 5 }).map((_, index) => <Star key={index} size={13} fill="currentColor" />)}</span>;
+}
+
+function PageLoader({ exiting }: { exiting: boolean }) {
   return (
-    <span className="brand-mark" aria-hidden="true">
-      <Mountain className="brand-mountain" size={25} strokeWidth={1.8} />
-      <Scissors className="brand-scissors" size={16} strokeWidth={2} />
-    </span>
+    <div className={`alpine-loader${exiting ? " is-exiting" : ""}`} role="status" aria-label="Loading What's The Buzz?">
+      <div className="alpine-loader-inner">
+        <BrandLogo />
+        <p>Schofield, Wisconsin · Barber shop</p>
+        <span className="alpine-loader-line" aria-hidden="true"><i /></span>
+      </div>
+    </div>
   );
 }
 
 export function BarberSite() {
-  const [status, setStatus] = useState({
-    isOpen: true,
-    label: "Walk-ins welcome today",
-  });
+  const [status, setStatus] = useState({ isOpen: true, label: "Walk-ins welcome today" });
+  const [galleryIndex, setGalleryIndex] = useState(0);
+  const [loaderVisible, setLoaderVisible] = useState(true);
+  const [loaderExiting, setLoaderExiting] = useState(false);
+  const orderedGallery = useMemo(
+    () => gallery.slice(0, 4).map((_, index) => gallery[(galleryIndex + index) % gallery.length]),
+    [galleryIndex],
+  );
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const exitAfter = reduceMotion ? 180 : 900;
+    document.body.classList.add("alpine-loading-active");
+    const exitTimer = window.setTimeout(() => setLoaderExiting(true), exitAfter);
+    const doneTimer = window.setTimeout(() => {
+      setLoaderVisible(false);
+      document.body.classList.remove("alpine-loading-active");
+    }, exitAfter + (reduceMotion ? 120 : 380));
+    return () => {
+      window.clearTimeout(exitTimer);
+      window.clearTimeout(doneTimer);
+      document.body.classList.remove("alpine-loading-active");
+    };
+  }, []);
 
   useEffect(() => {
     const updateStatus = () => setStatus(getShopStatus(new Date()));
     updateStatus();
-    const statusTimer = window.setInterval(updateStatus, 60_000);
-
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-    const revealItems = document.querySelectorAll<HTMLElement>("[data-reveal]");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -7%" },
-    );
-
-    revealItems.forEach((item) => observer.observe(item));
-
+    const timer = window.setInterval(updateStatus, 60_000);
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const items = document.querySelectorAll<HTMLElement>("[data-alpine-reveal]");
+    const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-revealed");
+        observer.unobserve(entry.target);
+      }
+    }), { threshold: 0.12, rootMargin: "0px 0px -8%" });
+    items.forEach((item) => observer.observe(item));
     let ticking = false;
-    const updateScroll = () => {
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
-      document.documentElement.style.setProperty(
-        "--scroll-progress",
-        String(Math.min(1, Math.max(0, progress))),
-      );
-
-      if (!prefersReducedMotion) {
-        document.documentElement.style.setProperty(
-          "--hero-shift",
-          `${Math.min(window.scrollY * 0.09, 52)}px`,
-        );
-      }
-      ticking = false;
-    };
-
     const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(updateScroll);
-        ticking = true;
-      }
+      if (ticking) return;
+      window.requestAnimationFrame(() => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        document.documentElement.style.setProperty("--alpine-progress", String(max > 0 ? window.scrollY / max : 0));
+        if (!reduceMotion) document.documentElement.style.setProperty("--alpine-shift", `${Math.min(window.scrollY * 0.08, 64)}px`);
+        ticking = false;
+      });
+      ticking = true;
     };
-
-    updateScroll();
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-
-    return () => {
-      window.clearInterval(statusTimer);
-      observer.disconnect();
-      window.removeEventListener("scroll", onScroll);
-    };
+    return () => { window.clearInterval(timer); observer.disconnect(); window.removeEventListener("scroll", onScroll); };
   }, []);
 
   return (
-    <div className="site-shell">
-      <a className="skip-link" href="#main-content">
-        Skip to content
-      </a>
-      <div className="scroll-progress" aria-hidden="true" />
+    <div className="alpine-site">
+      {loaderVisible && <PageLoader exiting={loaderExiting} />}
+      <a className="alpine-skip" href="#main-content">Skip to content</a>
+      <div className="alpine-progress" aria-hidden="true" />
 
-      <div className="status-bar">
-        <div className="page-width status-inner">
-          <div className="live-status" aria-live="polite">
-            <span className={`status-dot${status.isOpen ? " is-open" : ""}`} />
-            <span>{status.label}</span>
-            <span className="status-separator" aria-hidden="true" />
-            <strong>Walk-ins welcome</strong>
-          </div>
-          <div className="status-links">
-            <a href={PHONE_HREF}>
-              <Phone size={14} aria-hidden="true" />
-              {PHONE_DISPLAY}
-            </a>
-            <a href={DIRECTIONS_URL} target="_blank" rel="noreferrer">
-              <MapPin size={14} aria-hidden="true" />
-              Welches, Oregon
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <header className="site-header">
-        <div className="page-width nav-inner">
-          <a className="wordmark" href="#top" aria-label="Barber on the Mountain home">
-            <BrandMark />
-            <span>
-              <strong>Barber</strong>
-              <small>on the Mountain</small>
-            </span>
-          </a>
-
-          <nav className="desktop-nav" aria-label="Primary navigation">
-            <a href="#services">Services</a>
-            <a href="#reviews">Reviews</a>
-            <a href="#visit">Hours & location</a>
-          </nav>
-
-          <div className="nav-actions">
-            <a
-              className="icon-link"
-              href={INSTAGRAM_URL}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Visit Barber on the Mountain on Instagram"
-              title="Instagram"
-            >
-              <Camera size={20} aria-hidden="true" />
-            </a>
-            <a className="button button-small button-dark" href={PHONE_HREF}>
-              <Phone size={17} aria-hidden="true" />
-              Call now
-            </a>
-          </div>
+      <header className="alpine-header">
+        <Link href="/" aria-label="What's The Buzz? home"><BrandLogo /></Link>
+        <nav aria-label="Primary navigation">
+          <a href="#top">Home</a><a href="#craft">About</a><a href="#services">Services</a>
+          <a href="#gallery">Gallery</a><a href="#reviews">Reviews</a><a href="#visit">Contact</a>
+        </nav>
+        <div className="alpine-header-actions">
+          <a className="alpine-header-call" href={PHONE_HREF} aria-label={`Call What's The Buzz? at ${PHONE_DISPLAY}`}><Phone size={16} /><span>{PHONE_DISPLAY}</span></a>
+          <a className="alpine-header-book" href="/book"><CalendarDays size={15} /><span className="header-book-long">Book appointment</span><span className="header-book-short">Book</span></a>
         </div>
       </header>
 
       <main id="main-content">
-        <section className="hero" id="top" aria-labelledby="hero-title">
-          <div className="hero-visual" aria-hidden="true">
-            <img
-              src="/hero-barber.jpg"
-              alt=""
-              width="1672"
-              height="941"
-              fetchPriority="high"
-            />
+        <section className="alpine-hero" id="top">
+          <div className="alpine-hero-media" role="img" aria-label="Barbershop chair, storefront, and a finished haircut">
+            <img className="alpine-hero-image alpine-hero-image-1" src="/mountain-interior.jpg" alt="" aria-hidden="true" />
+            <img className="alpine-hero-image alpine-hero-image-2" src="/gallery-storefront.png" alt="" aria-hidden="true" />
+            <img className="alpine-hero-image alpine-hero-image-3" src="/hero-barber.jpg" alt="" aria-hidden="true" />
           </div>
-          <div className="hero-scrim" aria-hidden="true" />
-          <div className="hero-grid" aria-hidden="true" />
-          <div className="hero-side-label" aria-hidden="true">
-            US-26 / WELCHES / OREGON
-          </div>
-
-          <div className="page-width hero-content">
-            <div className="hero-copy">
-              <div className="hero-kicker hero-enter">
-                <span>Classic craft</span>
-                <span className="kicker-line" />
-                <span>Modern finish</span>
-              </div>
-              <h1 className="hero-enter hero-enter-two" id="hero-title">
-                Barber on
-                <span>the Mountain</span>
-              </h1>
-              <p className="hero-lede hero-enter hero-enter-three">
-                Precision cuts, clean fades, hot towel shaves, and an easygoing
-                mountain welcome. Walk in, sharpen up, and head out confident.
-              </p>
-              <div className="hero-actions hero-enter hero-enter-four">
-                <a className="button button-primary" href={PHONE_HREF}>
-                  <Phone size={19} aria-hidden="true" />
-                  Call for a cut
-                  <ArrowRight size={18} aria-hidden="true" />
-                </a>
-                <a
-                  className="button button-ghost-light"
-                  href={DIRECTIONS_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <MapPin size={19} aria-hidden="true" />
-                  Get directions
-                </a>
-              </div>
-              <div className="hero-proof hero-enter hero-enter-five">
-                <StarRow dark />
-                <a href={REVIEWS_URL} target="_blank" rel="noreferrer">
-                  <strong>5.0</strong> from 8 Google reviews
-                  <ArrowRight size={15} aria-hidden="true" />
-                </a>
-              </div>
+          <div className="alpine-hero-shade" aria-hidden="true" />
+          <div className="alpine-hero-copy">
+            <p className="alpine-kicker"><Sparkles size={22} /> Style, service, confidence <span>Schofield, Wisconsin</span></p>
+            <h1>A cut above.<br />Built for <em>more.</em></h1>
+            <p className="alpine-lede">Precision cuts. Friendly service.<br />A neighborhood shop built around you.</p>
+            <div className="alpine-actions">
+              <a className="alpine-button alpine-button-gold" href="/book">Book now <ArrowRight size={16} /></a>
+              <a className="alpine-button alpine-button-line" href="#services">Our services</a>
             </div>
+            <a className="alpine-rating" href={REVIEWS_URL} target="_blank" rel="noreferrer"><Stars /><span><strong>4.8</strong> · 39 Google reviews</span></a>
+          </div>
+          <div className="alpine-live" aria-live="polite"><i className={status.isOpen ? "is-open" : ""} /><span>{status.label}</span><strong>Walk-ins welcome</strong></div>
+          <a className="alpine-scroll" href="#craft" aria-label="Scroll to our craft"><span>Scroll</span><i><ArrowDown size={17} /></i></a>
+        </section>
 
-            <a className="scroll-cue" href="#welcome" aria-label="Scroll to learn more">
-              <span>Made for mountain life</span>
-              <ChevronDown size={19} aria-hidden="true" />
-            </a>
+        <section className="alpine-craft" id="craft">
+          <img src="/mountain-craft.jpg" alt="A barber carefully finishing a precision haircut" />
+          <div className="alpine-craft-shade" aria-hidden="true" />
+          <div className="alpine-craft-copy" data-alpine-reveal>
+            <p className="alpine-kicker"><Sparkles size={22} /> Our craft <span>Service is everything</span></p>
+            <h2>More than a cut.<br />It is an <em>experience.</em></h2>
+            <p>Consistent cuts, friendly service, and thoughtful finishing touches for adults, kids, and every style that walks through the door.</p>
+            <div className="alpine-facts"><span><Check size={14} /> Walk-ins welcome</span><span><Check size={14} /> Good for kids</span><span><Check size={14} /> Beverages offered</span></div>
+            <a className="alpine-button alpine-button-gold" href="#visit">Find the chair</a>
+          </div>
+
+          <div className="alpine-service-tray" id="services" data-alpine-reveal>
+            {serviceFeatures.map((service) => {
+              const Icon = service.icon;
+              return <article key={service.title} tabIndex={0}><Icon size={27} strokeWidth={1.35} /><h3>{service.title}</h3><p>{service.copy}</p><div className="service-detail-popover">{service.items.map((item) => <span key={item}>{item}</span>)}</div></article>;
+            })}
           </div>
         </section>
 
-        <section className="proof-band" id="welcome">
-          <div className="page-width proof-band-inner" data-reveal>
-            <div className="proof-score">
-              <span className="proof-number">5.0</span>
-              <div>
-                <StarRow />
-                <p>Every review is five stars</p>
-              </div>
+        <section className="alpine-experience" id="gallery">
+          <div className="alpine-section-heading" data-alpine-reveal>
+            <div><p className="alpine-kicker"><Sparkles size={22} /> The What&apos;s The Buzz? experience</p><h2>Built on quality.<br />Focused on <em>you.</em></h2></div>
+            <a className="alpine-button alpine-button-line" href={PROFILE_URL} target="_blank" rel="noreferrer"><Camera size={15} /> View Google profile</a>
+          </div>
+
+          <div className="alpine-gallery-wrap" data-alpine-reveal>
+            <button onClick={() => setGalleryIndex((index) => (index + gallery.length - 1) % gallery.length)} aria-label="Previous gallery image"><ChevronLeft size={20} /></button>
+            <div className="alpine-gallery" key={galleryIndex}>{orderedGallery.map((item, index) => <figure className={`gallery-item gallery-item-${index + 1}`} key={item.label}><img src={item.image} alt={item.alt} /><figcaption>{item.label}</figcaption></figure>)}</div>
+            <button onClick={() => setGalleryIndex((index) => (index + 1) % gallery.length)} aria-label="Next gallery image"><ChevronRight size={20} /></button>
+          </div>
+
+          <div className="alpine-reviews" id="reviews">
+            <div className="alpine-review-list" data-alpine-reveal>
+              <p className="alpine-subheading">What our clients say</p>
+              <div>{reviews.map((review) => <article key={review.name}><Stars /><blockquote>{review.quote}</blockquote><strong>— {review.name}</strong></article>)}</div>
             </div>
-            <blockquote>
-              "Great to finally have a barber on the mountain."
-            </blockquote>
-            <a className="text-link" href={REVIEWS_URL} target="_blank" rel="noreferrer">
-              Read all reviews
-              <ArrowRight size={17} aria-hidden="true" />
-            </a>
+            <aside className="alpine-review-cta" data-alpine-reveal><p className="alpine-kicker"><Sparkles size={20} /> Ready for the chair?</p><h2>Come get<br />sharpened up.</h2><p>Reserve your appointment and experience What&apos;s The Buzz?</p><a className="alpine-button alpine-button-gold" href="/book">Book appointment</a></aside>
           </div>
         </section>
 
-        <section className="intro-section section-pad">
-          <div className="page-width intro-grid">
-            <div className="section-label" data-reveal>
-              <span>01</span>
-              <p>Your local chair</p>
-            </div>
-            <div className="intro-copy" data-reveal>
-              <p className="eyebrow">Built for the mountain community</p>
-              <h2>
-                The cut you would drive to town for.
-                <em> Now it is right here.</em>
-              </h2>
-              <p className="intro-body">
-                A classic-meets-modern shop serving locals, visitors, skiers,
-                hikers, bikers, hunters, fishermen, veterans, first responders,
-                and every kid who needs a patient barber.
-              </p>
-            </div>
-            <div className="intro-facts" data-reveal>
-              <div>
-                <Check size={21} aria-hidden="true" />
-                <span>Walk-ins welcome</span>
-              </div>
-              <div>
-                <Check size={21} aria-hidden="true" />
-                <span>Good for kids</span>
-              </div>
-              <div>
-                <Check size={21} aria-hidden="true" />
-                <span>Appointments available</span>
-              </div>
-            </div>
+        <section className="alpine-visit" id="visit">
+          <div className="alpine-visit-info" data-alpine-reveal>
+            <div><p className="alpine-kicker"><MapPin size={20} /> Find us in Schofield</p><h2>On Schofield<br /><em>Avenue.</em></h2><p>Visit Suite 1 for an easy, friendly neighborhood barbershop experience. Walk-ins and online booking are both welcome.</p><address>2215 Schofield Ave #1<br />Schofield, WI 54476</address><div className="alpine-actions"><a className="alpine-button alpine-button-gold" href={DIRECTIONS_URL} target="_blank" rel="noreferrer">Get directions</a><a className="alpine-button alpine-button-line" href={PHONE_HREF}><Phone size={15} /> {PHONE_DISPLAY}</a></div></div>
+            <div className="alpine-hours"><div className="alpine-hours-head"><Clock3 size={21} /><span><small>Shop hours</small><strong>{status.label}</strong></span></div><dl>{hoursRows.map(([day, hours]) => <div key={day}><dt>{day}</dt><dd>{hours}</dd></div>)}</dl><p>Call ahead when timing matters, or reserve your chair online.</p></div>
           </div>
-        </section>
-
-        <div className="service-marquee" aria-hidden="true">
-          <div className="marquee-track">
-            <span>FADE CUTS</span><Scissors /><span>BEARD TRIMS</span><Scissors />
-            <span>KIDS' CUTS</span><Scissors /><span>HOT TOWEL SHAVES</span><Scissors />
-            <span>SCISSOR CUTS</span><Scissors /><span>BUZZ CUTS</span><Scissors />
-            <span>FADE CUTS</span><Scissors /><span>BEARD TRIMS</span><Scissors />
-            <span>KIDS' CUTS</span><Scissors /><span>HOT TOWEL SHAVES</span><Scissors />
-            <span>SCISSOR CUTS</span><Scissors /><span>BUZZ CUTS</span><Scissors />
-          </div>
-        </div>
-
-        <section className="services-section section-pad" id="services">
-          <div className="page-width">
-            <div className="section-heading" data-reveal>
-              <div>
-                <p className="eyebrow">Cuts, shaves, and clean finishes</p>
-                <h2>Choose your refresh.</h2>
-              </div>
-              <p>
-                No complicated menu. Tell us what you are after, settle into the
-                chair, and leave feeling like yourself on a very good day.
-              </p>
-            </div>
-
-            <div className="service-grid">
-              {serviceGroups.map((group, index) => (
-                <article
-                  className="service-card"
-                  data-reveal
-                  style={{ "--delay": `${index * 90}ms` } as React.CSSProperties}
-                  key={group.title}
-                >
-                  <div className="service-card-top">
-                    <span>{group.number}</span>
-                    <Scissors size={25} strokeWidth={1.6} aria-hidden="true" />
-                  </div>
-                  <h3>{group.title}</h3>
-                  <p>{group.description}</p>
-                  <ul>
-                    {group.services.map((service) => (
-                      <li key={service}>
-                        <span>{service}</span>
-                        <ArrowRight size={14} aria-hidden="true" />
-                      </li>
-                    ))}
-                  </ul>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="process-section section-pad">
-          <div className="ridge ridge-one" aria-hidden="true" />
-          <div className="ridge ridge-two" aria-hidden="true" />
-          <div className="page-width process-inner">
-            <div className="process-heading" data-reveal>
-              <p className="eyebrow">Simple by design</p>
-              <h2>Walk in rough. Walk out ready.</h2>
-            </div>
-            <div className="process-list">
-              <div className="process-step" data-reveal>
-                <span>01</span>
-                <div>
-                  <h3>Drop in</h3>
-                  <p>Walk-ins are welcome. Call first if you want to check the wait.</p>
-                </div>
-              </div>
-              <div className="process-step" data-reveal>
-                <span>02</span>
-                <div>
-                  <h3>Settle in</h3>
-                  <p>Bring a reference or describe the look. We will take it from there.</p>
-                </div>
-              </div>
-              <div className="process-step" data-reveal>
-                <span>03</span>
-                <div>
-                  <h3>Head out sharp</h3>
-                  <p>Fresh, confident, and ready for wherever the mountain takes you.</p>
-                </div>
-              </div>
-            </div>
-            <div className="process-actions" data-reveal>
-              <a className="button button-primary" href={PHONE_HREF}>
-                <Phone size={19} aria-hidden="true" />
-                Check the wait
-              </a>
-              <span>No online form. Just a real person on the other end.</span>
-            </div>
-          </div>
-        </section>
-
-        <section className="reviews-section section-pad" id="reviews">
-          <div className="page-width">
-            <div className="section-heading reviews-heading" data-reveal>
-              <div>
-                <p className="eyebrow">Straight from the chair</p>
-                <h2>Mountain-approved.</h2>
-              </div>
-              <div className="rating-lockup">
-                <span>5.0</span>
-                <div>
-                  <StarRow />
-                  <p>8 Google reviews</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="review-grid">
-              {reviews.map((review, index) => (
-                <article
-                  className="review-card"
-                  data-reveal
-                  style={{ "--delay": `${index * 90}ms` } as React.CSSProperties}
-                  key={review.name}
-                >
-                  <StarRow />
-                  <blockquote>"{review.quote}"</blockquote>
-                  <footer>
-                    <span className="review-initial">{review.name.charAt(0)}</span>
-                    <div>
-                      <strong>{review.name}</strong>
-                      <small>{review.detail}</small>
-                    </div>
-                  </footer>
-                </article>
-              ))}
-            </div>
-
-            <div className="reviews-cta" data-reveal>
-              <p>Good cuts travel by word of mouth.</p>
-              <a className="text-link" href={REVIEWS_URL} target="_blank" rel="noreferrer">
-                View every Google review
-                <ArrowRight size={17} aria-hidden="true" />
-              </a>
-            </div>
-          </div>
-        </section>
-
-        <section className="visit-section" id="visit">
-          <div className="visit-map" aria-hidden="true">
-            <div className="road road-one" />
-            <div className="road road-two" />
-            <div className="map-pin-graphic">
-              <MapPin size={38} strokeWidth={1.6} />
-            </div>
-            <span className="map-label label-welches">WELCHES</span>
-            <span className="map-label label-highway">US-26</span>
-            <span className="map-label label-hood">MT. HOOD</span>
-          </div>
-          <div className="page-width visit-grid">
-            <div className="visit-copy" data-reveal>
-              <p className="eyebrow">Find the chair</p>
-              <h2>Right off US-26.</h2>
-              <p>
-                Inside Hoodland Shopping Center at the Thriftway Plaza. Easy in,
-                easy out, and close to the road home.
-              </p>
-              <address>
-                68216 US-26<br />
-                Welches, OR 97067
-              </address>
-              <div className="visit-actions">
-                <a
-                  className="button button-primary"
-                  href={DIRECTIONS_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <MapPin size={19} aria-hidden="true" />
-                  Get directions
-                </a>
-                <a className="button button-outline" href={PHONE_HREF}>
-                  <Phone size={19} aria-hidden="true" />
-                  {PHONE_DISPLAY}
-                </a>
-              </div>
-            </div>
-
-            <div className="hours-panel" data-reveal>
-              <div className="hours-title">
-                <Clock3 size={24} aria-hidden="true" />
-                <div>
-                  <span>Shop hours</span>
-                  <strong>{status.label}</strong>
-                </div>
-              </div>
-              <dl>
-                {hoursRows.map(([day, hours]) => (
-                  <div key={day}>
-                    <dt>{day}</dt>
-                    <dd>{hours}</dd>
-                  </div>
-                ))}
-              </dl>
-              <p>Hours can flex with mountain life. Call ahead when timing matters.</p>
-            </div>
-          </div>
-        </section>
-
-        <section className="final-cta">
-          <div className="cta-lines" aria-hidden="true" />
-          <div className="page-width final-cta-inner" data-reveal>
-            <div>
-              <p className="eyebrow">Your next good hair day starts here</p>
-              <h2>Come get sharpened up.</h2>
-            </div>
-            <div className="final-actions">
-              <a className="button button-light" href={PHONE_HREF}>
-                <Phone size={19} aria-hidden="true" />
-                Call {PHONE_DISPLAY}
-              </a>
-              <a
-                className="button button-ghost-light"
-                href={INSTAGRAM_URL}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Camera size={19} aria-hidden="true" />
-                Follow on Instagram
-              </a>
-            </div>
+          <div className="alpine-map">
+            <iframe title="Interactive Google Map showing What's The Buzz? in Schofield, Wisconsin" src="https://www.google.com/maps?q=2215%20Schofield%20Ave%20%231%2C%20Schofield%2C%20WI%2054476&z=15&output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
+            <div className="alpine-map-label"><MapPin size={19} /><span><strong>What&apos;s The Buzz?</strong><small>2215 Schofield Ave #1 · Schofield, Wisconsin</small></span><a href={DIRECTIONS_URL} target="_blank" rel="noreferrer">Open directions <ArrowRight size={15} /></a></div>
           </div>
         </section>
       </main>
 
-      <footer className="site-footer">
-        <div className="page-width footer-top">
-          <a className="wordmark wordmark-footer" href="#top" aria-label="Back to top">
-            <BrandMark />
-            <span>
-              <strong>Barber</strong>
-              <small>on the Mountain</small>
-            </span>
-          </a>
-          <p>Classic-meets-modern barbering in Welches, Oregon.</p>
-          <div className="footer-links">
-            <a href="#services">Services</a>
-            <a href="#reviews">Reviews</a>
-            <a href="#visit">Visit</a>
-            <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram</a>
-          </div>
-        </div>
-        <div className="page-width footer-bottom">
-          <span>Barber on the Mountain</span>
-          <span>Walk-ins and appointments welcome</span>
-        </div>
+      <footer className="alpine-footer">
+        <div><a href="#top"><BrandLogo footer /></a><p>Friendly service. Consistent craft.<br />A cut above.</p><a href={PROFILE_URL} target="_blank" rel="noreferrer"><Camera size={17} /> Google profile</a></div>
+        <div><h2>Quick links</h2><a href="#craft">About</a><a href="#services">Services</a><a href="#gallery">Gallery</a><a href="#reviews">Reviews</a><a href="#visit">Contact</a></div>
+        <div><h2>Visit</h2><p>2215 Schofield Ave #1<br />Schofield, WI 54476</p><a href={PHONE_HREF}>{PHONE_DISPLAY}</a><a href="/owner">Owner studio</a></div>
+        <div><h2>Ready?</h2><p>Walk-ins and appointments welcome.</p><a className="alpine-button alpine-button-gold" href="/book">Book your chair</a></div>
+        <p className="alpine-copyright">© 2026 What&apos;s The Buzz? · Schofield, Wisconsin</p>
       </footer>
 
-      <div className="mobile-action-bar" aria-label="Quick actions">
-        <a href={PHONE_HREF}>
-          <Phone size={19} aria-hidden="true" />
-          Call now
-        </a>
-        <a href={DIRECTIONS_URL} target="_blank" rel="noreferrer">
-          <MapPin size={19} aria-hidden="true" />
-          Directions
-        </a>
-      </div>
+      <div className="alpine-mobile-actions"><a href="/book"><CalendarDays size={18} /> Book</a><a href={PHONE_HREF}><Phone size={18} /> Call</a></div>
     </div>
   );
 }
