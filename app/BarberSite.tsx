@@ -27,6 +27,7 @@ const PHONE_HREF = "tel:+17152983307";
 const PROFILE_URL = "https://www.google.com/search?q=What%27s+The+Buzz+barber+shop+Schofield+WI";
 const REVIEWS_URL = `${PROFILE_URL}+reviews`;
 const DIRECTIONS_URL = "https://www.google.com/maps/dir/?api=1&destination=2215%20Schofield%20Ave%20%231%2C%20Schofield%2C%20WI%2054476";
+const BOOKSY_URL = "https://booksy.com/en-us/538246_what-s-the-buzz-barbershop-family-haircare_barber-shop_39918_schofield?rwg_token=AE37R_iW654k4N9iVc71iT9ZZUhQpr4G94Ozux13YBZpSlpJFyeRfNpt0adwoWFub8GQYSEJuPhRYaTT6dP-V-AaqtBEcFg51A==";
 
 type HoursWindow = [number, number];
 
@@ -210,7 +211,7 @@ export function BarberSite() {
         </nav>
         <div className="alpine-header-actions">
           <a className="alpine-header-call" href={PHONE_HREF} aria-label={`Call What's The Buzz? at ${PHONE_DISPLAY}`}><Phone size={16} /><span>{PHONE_DISPLAY}</span></a>
-          <a className="alpine-header-book" href="/book"><CalendarDays size={15} /><span className="header-book-long">Book appointment</span><span className="header-book-short">Book</span></a>
+          <a className="alpine-header-book" href={BOOKSY_URL} target="_blank" rel="noreferrer"><CalendarDays size={15} /><span className="header-book-long">Book appointment</span><span className="header-book-short">Book</span></a>
         </div>
       </header>
 
@@ -227,7 +228,7 @@ export function BarberSite() {
             <h1>A cut above.<br />Built for <em>more.</em></h1>
             <p className="alpine-lede">Precision cuts. Friendly service.<br />A neighborhood shop built around you.</p>
             <div className="alpine-actions">
-              <a className="alpine-button alpine-button-gold" href="/book">Book now <ArrowRight size={16} /></a>
+              <a className="alpine-button alpine-button-gold" href={BOOKSY_URL} target="_blank" rel="noreferrer">Book now <ArrowRight size={16} /></a>
               <a className="alpine-button alpine-button-line" href="#services">Our services</a>
             </div>
             <a className="alpine-rating" href={REVIEWS_URL} target="_blank" rel="noreferrer"><Stars /><span><strong>4.8</strong> · 39 Google reviews</span></a>
@@ -272,7 +273,7 @@ export function BarberSite() {
               <p className="alpine-subheading">What our clients say</p>
               <div>{reviews.map((review) => <article key={review.name}><Stars /><blockquote>{review.quote}</blockquote><strong>— {review.name}</strong></article>)}</div>
             </div>
-            <aside className="alpine-review-cta" data-alpine-reveal><p className="alpine-kicker"><Sparkles size={20} /> Ready for the chair?</p><h2>Come get<br />sharpened up.</h2><p>Reserve your appointment and experience What&apos;s The Buzz?</p><a className="alpine-button alpine-button-gold" href="/book">Book appointment</a></aside>
+            <aside className="alpine-review-cta" data-alpine-reveal><p className="alpine-kicker"><Sparkles size={20} /> Ready for the chair?</p><h2>Come get<br />sharpened up.</h2><p>Reserve your appointment and experience What&apos;s The Buzz?</p><a className="alpine-button alpine-button-gold" href={BOOKSY_URL} target="_blank" rel="noreferrer">Book appointment</a></aside>
           </div>
         </section>
 
@@ -291,12 +292,12 @@ export function BarberSite() {
       <footer className="alpine-footer">
         <div><a href="#top"><BrandLogo footer /></a><p>Friendly service. Consistent craft.<br />A cut above.</p><a href={PROFILE_URL} target="_blank" rel="noreferrer"><Camera size={17} /> Google profile</a></div>
         <div><h2>Quick links</h2><a href="#craft">About</a><a href="#services">Services</a><a href="#gallery">Gallery</a><a href="#reviews">Reviews</a><a href="#visit">Contact</a></div>
-        <div><h2>Visit</h2><p>2215 Schofield Ave #1<br />Schofield, WI 54476</p><a href={PHONE_HREF}>{PHONE_DISPLAY}</a><a href="/owner">Owner studio</a></div>
-        <div><h2>Ready?</h2><p>Walk-ins and appointments welcome.</p><a className="alpine-button alpine-button-gold" href="/book">Book your chair</a></div>
+        <div><h2>Visit</h2><p>2215 Schofield Ave #1<br />Schofield, WI 54476</p><a href={PHONE_HREF}>{PHONE_DISPLAY}</a><a href={BOOKSY_URL} target="_blank" rel="noreferrer">Book on Booksy</a></div>
+        <div><h2>Ready?</h2><p>Walk-ins and appointments welcome.</p><a className="alpine-button alpine-button-gold" href={BOOKSY_URL} target="_blank" rel="noreferrer">Book your chair</a></div>
         <p className="alpine-copyright">© 2026 What&apos;s The Buzz? · Schofield, Wisconsin</p>
       </footer>
 
-      <div className="alpine-mobile-actions"><a href="/book"><CalendarDays size={18} /> Book</a><a href={PHONE_HREF}><Phone size={18} /> Call</a></div>
+      <div className="alpine-mobile-actions"><a href={BOOKSY_URL} target="_blank" rel="noreferrer"><CalendarDays size={18} /> Book</a><a href={PHONE_HREF}><Phone size={18} /> Call</a></div>
     </div>
   );
 }

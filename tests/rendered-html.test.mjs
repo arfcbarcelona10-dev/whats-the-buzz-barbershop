@@ -8,32 +8,17 @@ async function source(pathname) {
   return readFile(new URL(pathname, projectRoot), "utf8");
 }
 
-test("public site routes visitors into online booking", async () => {
+test("public site routes every appointment action to Booksy", async () => {
   const homepage = await source("app/BarberSite.tsx");
-  assert.match(homepage, /href="\/book"/);
+  assert.match(homepage, /const BOOKSY_URL = "https:\/\/booksy\.com\/en-us\/538246_/);
   assert.match(homepage, /Book your chair/);
   assert.match(homepage, /Walk-ins welcome/);
+  assert.doesNotMatch(homepage, /href="\/(?:book|owner)"/);
 });
 
-test("client booking includes service, availability, contact, and management flows", async () => {
-  const booking = await source("app/book/BookingApp.tsx");
-  assert.match(booking, /What are we sharpening up/);
-  assert.match(booking, /When should we hold the chair/);
-  assert.match(booking, /Confirm appointment/);
-  assert.match(booking, /reschedule/);
-  assert.match(booking, /cancel/);
-});
-
-test("owner studio includes protected operations", async () => {
-  const [owner, sessionApi, ownerApi] = await Promise.all([
-    source("app/owner/OwnerApp.tsx"),
-    source("app/api/owner/session/route.ts"),
-    source("app/api/owner/route.ts"),
-  ]);
-  assert.match(owner, /Owner studio/);
-  assert.match(owner, /Add walk-in/);
-  assert.match(owner, /Services & pricing/);
-  assert.match(owner, /Block time/);
-  assert.match(sessionApi, /HttpOnly|sessionCookie/);
-  assert.match(ownerApi, /sessionIsValid/);
+test("internal booking and owner routes are removed", async () => {
+  await assert.rejects(source("app/book/page.tsx"));
+  await assert.rejects(source("app/owner/page.tsx"));
+  await assert.rejects(source("app/api/booking/route.ts"));
+  await assert.rejects(source("app/api/owner/route.ts"));
 });

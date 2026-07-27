@@ -6,9 +6,7 @@ import "@fontsource/manrope/500.css";
 import "@fontsource/manrope/600.css";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import "./booking.css";
 import "./globals.css";
-import "./alpine-app.css";
 
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
