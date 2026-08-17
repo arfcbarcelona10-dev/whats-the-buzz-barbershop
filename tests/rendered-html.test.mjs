@@ -22,3 +22,13 @@ test("internal booking and owner routes are removed", async () => {
   await assert.rejects(source("app/api/booking/route.ts"));
   await assert.rejects(source("app/api/owner/route.ts"));
 });
+
+test("hero and gallery use the updated shop photography", async () => {
+  const homepage = await source("app/BarberSite.tsx");
+  assert.match(homepage, /buzz-storefront-close\.jpg/);
+  assert.match(homepage, /buzz-chair\.jpg/);
+  assert.match(homepage, /buzz-front-door\.jpg/);
+  assert.match(homepage, /buzz-storefront-wide\.jpg/);
+  assert.match(homepage, /buzz-waiting-area\.jpg/);
+  assert.doesNotMatch(homepage, /label: "The (?:craft|finish)"/i);
+});

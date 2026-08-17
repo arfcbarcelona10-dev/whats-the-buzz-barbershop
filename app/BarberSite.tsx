@@ -72,14 +72,13 @@ const reviews = [
 ];
 
 const gallery = [
-  { image: "/mountain-interior.jpg", alt: "Warm timber barbershop interior", label: "The chair" },
-  { image: "/mountain-craft.jpg", alt: "Barber carefully finishing a haircut", label: "The craft" },
-  { image: "/mountain-shop-hero.jpg", alt: "Premium barbershop exterior and interior detail", label: "The shop" },
-  { image: "/barber-before-after.png", alt: "Before and after transformation from an overgrown style to a polished haircut and beard", label: "The finish" },
+  { image: "/buzz-chair.jpg", alt: "The barber chair inside What's The Buzz?", label: "The chair" },
+  { image: "/buzz-front-door.jpg", alt: "The blue entrance to What's The Buzz?", label: "The shop" },
   { image: "/gallery-detail.png", alt: "Fresh short haircut and precisely shaped beard shown in profile", label: "The detail" },
   { image: "/gallery-style.png", alt: "Finished braided hairstyle shown in profile", label: "The style" },
   { image: "/gallery-rules.png", alt: "Vintage barbershop rules sign inside the shop", label: "The rules" },
-  { image: "/gallery-storefront.png", alt: "What's The Buzz? storefront in Schofield, Wisconsin", label: "The storefront" },
+  { image: "/buzz-storefront-wide.jpg", alt: "Wide view of the What's The Buzz? storefront in Schofield, Wisconsin", label: "The storefront" },
+  { image: "/buzz-waiting-area.jpg", alt: "The welcoming waiting area inside What's The Buzz?", label: "The welcome" },
 ];
 
 function formatTime(minutes: number) {
@@ -219,7 +218,7 @@ export function BarberSite() {
         <section className="alpine-hero" id="top">
           <div className="alpine-hero-media" role="img" aria-label="Barbershop chair, storefront, and a finished haircut">
             <img className="alpine-hero-image alpine-hero-image-1" src="/mountain-interior.jpg" alt="" aria-hidden="true" />
-            <img className="alpine-hero-image alpine-hero-image-2" src="/gallery-storefront.png" alt="" aria-hidden="true" />
+            <img className="alpine-hero-image alpine-hero-image-2" src="/buzz-storefront-close.jpg" alt="" aria-hidden="true" />
             <img className="alpine-hero-image alpine-hero-image-3" src="/hero-barber.jpg" alt="" aria-hidden="true" />
           </div>
           <div className="alpine-hero-shade" aria-hidden="true" />
